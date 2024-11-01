@@ -1,2 +1,5 @@
 /Dima.Core/obj
+/Dima.Core/bin
 /Dima.Api/obj
+/Dima.Api/bin
+.vs
