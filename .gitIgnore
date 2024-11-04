@@ -2,4 +2,6 @@
 /Dima.Core/bin
 /Dima.Api/obj
 /Dima.Api/bin
+/Dima.Web/obj
+/Dima.Web/bin
 .vs
