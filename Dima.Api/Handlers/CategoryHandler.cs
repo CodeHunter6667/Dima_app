@@ -23,7 +23,7 @@ public class CategoryHandler(AppDbContext context) : ICategoryHandler
             await context.Categories.AddAsync(category);
             await context.SaveChangesAsync();
 
-            return new Response<Category?>(category);
+            return new Response<Category?>(category, 201, "Categoria criada com sucesso");
         }
         catch (Exception ex)
         {
@@ -93,7 +93,7 @@ public class CategoryHandler(AppDbContext context) : ICategoryHandler
                 .Categories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == request.Id 
-                && request.UserId == request.UserId);
+                && x.UserId == request.UserId);
 
             return category is null
                 ? new Response<Category?>(null, 404, "Categoria não encontrada")
