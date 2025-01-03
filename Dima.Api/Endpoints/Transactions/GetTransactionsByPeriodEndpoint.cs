@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Core;
 using Dima.Core.Handlers;
@@ -12,7 +13,7 @@ public class GetTransactionsByPeriodEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/", HandleAsync)
-            .WithName("Categories: Get All")
+            .WithName("Transactions: Get By Period")
             .WithSummary("Recupera todas as categoria")
             .WithDescription("Recupera todas as categoria")
             .WithOrder(5)
@@ -20,6 +21,7 @@ public class GetTransactionsByPeriodEndpoint : IEndpoint
 
     private static async Task<IResult> HandleAsync(
         ITransactionHandler handler,
+        ClaimsPrincipal user,
         [FromQuery] DateTime? startDate = null,
         [FromQuery] DateTime? endDate = null,
         [FromQuery] int pageNumber = Configuration.DefaultPageNumber,
@@ -27,7 +29,7 @@ public class GetTransactionsByPeriodEndpoint : IEndpoint
     {
         var request = new GetTransactionsByPeriodRequest
         {
-            UserId = "teste@balta.io",
+            UserId = user.Identity?.Name ?? string.Empty,
             PageNumber = pageNumber,
             PageSize = pageSize,
             StartDate = startDate,

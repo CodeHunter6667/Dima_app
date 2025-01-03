@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
@@ -17,9 +18,10 @@ public class CreateTransactionEndpoint : IEndpoint
             .Produces<Response<Transaction?>>();
 
     private static async Task<IResult> HandleAsync(ITransactionHandler handler,
-        CreateTransactionRequest request)
+        CreateTransactionRequest request,
+        ClaimsPrincipal user)
     {
-        request.UserId = "teste@balta.io";
+        request.UserId = user.Identity?.Name ?? string.Empty;
         var result = await handler.CreateAsync(request);
         
         return result.IsSuccess
